@@ -3,9 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { 
-    title: 'Ben"s Blog',
-    heading: "Ben's Blog" });
+  res.render('index', {
+    title: 'GHSCL Management',
+    heading: 'GHSCL Manager'
+  });
 });
 
 router.post('/', (req, res, next) => {

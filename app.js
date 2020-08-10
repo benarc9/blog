@@ -11,7 +11,8 @@ var boottestRouter = require('./routes/boottest');
 
 var app = express();
 var hbs = exphbs.create({
-  defaultLayout: 'layout.hbs'
+  defaultLayout: 'layout.hbs',
+  partialsDir: __dirname + '/views/partials'
 });
 
 // view engine setup
