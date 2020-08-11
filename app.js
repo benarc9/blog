@@ -12,7 +12,27 @@ var boottestRouter = require('./routes/boottest');
 var app = express();
 var hbs = exphbs.create({
   defaultLayout: 'layout.hbs',
-  partialsDir: __dirname + '/views/partials'
+  partialsDir: __dirname + '/views/partials',
+  helpers: {
+    test: () => {return 'Tested Helper!'},
+    multi: (arg1, arg2) => {
+      let resultPart1;
+      if (arg1 === 'Test1'){
+        resultPart1 = 'Correct';
+      } else {
+        resultPart1 = 'Incorrect';
+      }
+
+      let resultPart2;
+      if (arg2  === 'Test2') {
+        resultPart2 = 'Correct';
+      } else {
+        resultPart2 = 'Incorrect';
+      }
+
+      return "<div><p>" + resultPart1 + " " + resultPart2 + "</p></div>";
+    }
+  }
 });
 
 // view engine setup
@@ -26,6 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'images')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
