@@ -7,32 +7,13 @@ var exphbs = require('express-handlebars');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var boottestRouter = require('./routes/boottest');
+
+var Database = require('./util/database');
 
 var app = express();
 var hbs = exphbs.create({
   defaultLayout: 'layout.hbs',
-  partialsDir: __dirname + '/views/partials',
-  helpers: {
-    test: () => {return 'Tested Helper!'},
-    multi: (arg1, arg2) => {
-      let resultPart1;
-      if (arg1 === 'Test1'){
-        resultPart1 = 'Correct';
-      } else {
-        resultPart1 = 'Incorrect';
-      }
-
-      let resultPart2;
-      if (arg2  === 'Test2') {
-        resultPart2 = 'Correct';
-      } else {
-        resultPart2 = 'Incorrect';
-      }
-
-      return "<div><p>" + resultPart1 + " " + resultPart2 + "</p></div>";
-    }
-  }
+  partialsDir: __dirname + '/views/partials'
 });
 
 // view engine setup
@@ -50,12 +31,17 @@ app.use(express.static(path.join(__dirname, 'images')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/boottest', boottestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+//#region Database Setup
+var db = new Database();
+db.connect();
+db.test();
+//#endregion
 
 // error handler
 app.use(function(err, req, res, next) {
